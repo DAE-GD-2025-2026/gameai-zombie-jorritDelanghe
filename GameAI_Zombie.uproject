@@ -34,5 +34,10 @@
 			"Name": "ModularGameplay",
 			"Enabled": true
 		}
+		,
+		{
+			"Name": "DelangheJorritZombie",
+			"Enabled": true
+		}
 	]
 }
