@@ -9,6 +9,8 @@
 #include "Perception/AISenseConfig_Damage.h"
 #include "Perception/AISense_Damage.h"
 #include "Items/BaseItem.h"
+#include "Zombies/BaseZombie.h"
+#include "Village/House/House.h"
 #include "StudentPerceptor.generated.h"
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -24,4 +26,14 @@ public:
 
 	UFUNCTION()
 	virtual void OnPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
+	
+private:
+	UPROPERTY()
+	TArray<ABaseZombie*> PerceivedZombies{};
+	
+	UPROPERTY()
+	TArray<ABaseItem*> PerceivedItems{};
+	
+	UPROPERTY()
+	TArray<AHouse*> PerceivedHouses{};
 };
