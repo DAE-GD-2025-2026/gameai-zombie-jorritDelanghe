@@ -1,7 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 using UnrealBuildTool;
-
+using System.IO;
 public class DelangheJorritZombieRuntime : ModuleRules
 {
 	public DelangheJorritZombieRuntime(ReadOnlyTargetRules Target) : base(Target)
@@ -10,7 +10,7 @@ public class DelangheJorritZombieRuntime : ModuleRules
 		
 		PublicIncludePaths.AddRange(
 			new string[] {
-				// ... add public include paths required here ...
+				Path.Combine(PluginDirectory, "../../../Source/GameAI_Zombie")
 			}
 			);
 				
@@ -25,7 +25,7 @@ public class DelangheJorritZombieRuntime : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core",
+				"Core",  "GameAI_Zombie" 
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
