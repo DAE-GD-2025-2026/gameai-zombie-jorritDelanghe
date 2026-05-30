@@ -27,14 +27,15 @@ public:
 	UFUNCTION()
 	virtual void OnPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 	
-	const TArray<AHouse*>& GetPerceivedHouses() const {return PerceivedHouses;}
+	const TArray<AHouse*>& GetObservedHouses() const {return ObservedHouses;}
+	const TArray<ABaseZombie*>& GetObservedZombies() const {return  ObservedZombies;}
 private:
 	UPROPERTY()
-	TArray<ABaseZombie*> PerceivedZombies{};
+	TArray<ABaseZombie*> ObservedZombies{};
 	
 	UPROPERTY()
-	TArray<ABaseItem*> PerceivedItems{};
+	TArray<ABaseItem*> ObservedItems{};
 	
 	UPROPERTY()
-	TArray<AHouse*> PerceivedHouses{};
+	TArray<AHouse*> ObservedHouses{};
 };

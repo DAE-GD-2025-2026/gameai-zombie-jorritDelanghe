@@ -48,13 +48,13 @@ void UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated(AActor* Actor, FAISti
 	{
 		if (sensed)
 		{
-			PerceivedZombies.Add(zombie);
+			ObservedZombies.Add(zombie);
 			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
 	FString::Printf(TEXT("Saw Zombie!")));
 		}
 		else
 		{
-			PerceivedZombies.Remove(zombie);
+			ObservedZombies.Remove(zombie);
 			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
 	FString::Printf(TEXT("Zombie not in view anymore!")));
 		}
@@ -64,13 +64,13 @@ void UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated(AActor* Actor, FAISti
 	{
 		if (sensed)
 		{
-			PerceivedItems.Add(item);
+			ObservedItems.Add(item);
 			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
 	FString::Printf(TEXT("Saw item!")));
 		}
 		else
 		{
-			PerceivedItems.Remove(item);
+			ObservedItems.Remove(item);
 			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
 	FString::Printf(TEXT("item not in view anymore!")));
 		}
@@ -80,13 +80,13 @@ void UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated(AActor* Actor, FAISti
 	{
 		if (sensed)
 		{
-			PerceivedHouses.Add(house);
+			ObservedHouses.Add(house);
 			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
 	FString::Printf(TEXT("Saw house!")));
 		}
 		else
 		{
-			PerceivedHouses.Remove(house);
+			ObservedHouses.Remove(house);
 			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
 	FString::Printf(TEXT("house not in view anymore!")));
 		}

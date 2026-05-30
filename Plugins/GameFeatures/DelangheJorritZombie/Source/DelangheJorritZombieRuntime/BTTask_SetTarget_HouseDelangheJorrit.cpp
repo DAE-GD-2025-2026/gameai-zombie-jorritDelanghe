@@ -17,7 +17,7 @@ EBTNodeResult::Type UBTTask_SetTarget_HouseDelangheJorrit::ExecuteTask(UBehavior
 	auto* Perceptor = Pawn->GetComponentByClass<UStudentPerceptor_DelangheJorrit>();
 	if (!Perceptor) return EBTNodeResult::Failed;
 	
-	const auto& Houses{Perceptor->GetPerceivedHouses()};
+	const auto& Houses{Perceptor->GetObservedHouses()};
 	if (Houses.IsEmpty()) return EBTNodeResult::Failed;
 	
 	//look for nearest house

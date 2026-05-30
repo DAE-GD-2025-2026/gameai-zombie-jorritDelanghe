@@ -5,16 +5,16 @@
 #include "BTTask_SetTarget_HouseDelangheJorrit.generated.h"
 
 UCLASS()
-class DELANGHEJORRITZOMBIERUNTIME_API  UBTTask_SetTarget_HouseDelangheJorrit : public UBTTaskNode
+class DELANGHEJORRITZOMBIERUNTIME_API  UBTTask_SetTarget_HouseDelangheJorrit final: public UBTTaskNode
 {
 	GENERATED_BODY()
 public:
-	UBTTask_SetTarget_HouseDelangheJorrit();
+	explicit UBTTask_SetTarget_HouseDelangheJorrit();
 	
 	//called when Behavour tree reaches node, one time
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 	
-	UPROPERTY(EditAnywhere,Category="Blackboard")
-	FBlackboardKeySelector TargetHouseKey;
 	private:
+	UPROPERTY(EditAnywhere,Category="Blackboard")
+	FBlackboardKeySelector TargetHouseKey{};
 };
