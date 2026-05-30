@@ -2,6 +2,7 @@
 #include "StudentPerceptor_DelangheJorrit.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AIController.h"
+#include "BTHelpers_DelangheJorrit.h"
 
 UBTTask_SetTarget_HouseDelangheJorrit::UBTTask_SetTarget_HouseDelangheJorrit()
 {
@@ -17,23 +18,12 @@ EBTNodeResult::Type UBTTask_SetTarget_HouseDelangheJorrit::ExecuteTask(UBehavior
 	auto* Perceptor = Pawn->GetComponentByClass<UStudentPerceptor_DelangheJorrit>();
 	if (!Perceptor) return EBTNodeResult::Failed;
 	
-	const auto& Houses{Perceptor->GetObservedHouses()};
-	if (Houses.IsEmpty()) return EBTNodeResult::Failed;
+	const auto& houses{Perceptor->GetObservedHouses()};
+	if (houses.IsEmpty()) return EBTNodeResult::Failed;
 	
 	//look for nearest house
-	float ClosestDistance{FLT_MAX};
-	AHouse* ClosestHosue{nullptr};
+	AHouse* closestHouse{FindClosestActor(houses,Pawn->GetActorLocation())};
 	
-	for (auto& House : Houses)
-	{
-		const float distance {static_cast<float>( FVector::Dist(Pawn->GetActorLocation(),House->GetActorLocation()))};
-		
-		if (distance < ClosestDistance)
-		{
-			ClosestDistance = distance;
-			ClosestHosue = House;
-		}
-	}
-	OwnerComp.GetBlackboardComponent()->SetValueAsObject(TargetHouseKey.SelectedKeyName,ClosestHosue);
+	OwnerComp.GetBlackboardComponent()->SetValueAsObject(TargetHouseKey.SelectedKeyName,closestHouse);
 	return EBTNodeResult::Succeeded;
 }

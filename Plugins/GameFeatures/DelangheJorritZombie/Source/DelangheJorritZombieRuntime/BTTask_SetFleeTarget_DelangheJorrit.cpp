@@ -3,6 +3,7 @@
 #include "AIController.h"
 #include "StudentPerceptor_DelangheJorrit.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "BTHelpers_DelangheJorrit.h"
 
 UBTTask_SetFleeTarget_DelangheJorrit::UBTTask_SetFleeTarget_DelangheJorrit()
 {
@@ -22,19 +23,8 @@ EBTNodeResult::Type UBTTask_SetFleeTarget_DelangheJorrit::ExecuteTask(UBehaviorT
 	if (zombies.IsEmpty()) return EBTNodeResult::Failed;
 	
 	//find nearest zombie
-	float closestDistance{FLT_MAX};
-	ABaseZombie* closestZombie{nullptr};
+	ABaseZombie* closestZombie{FindClosestActor(zombies, Pawn->GetActorLocation())};
 	
-	for (auto& zombie : zombies)
-	{
-		const float distance {static_cast<float>( FVector::Dist(Pawn->GetActorLocation(),zombie->GetActorLocation()))};
-		
-		if (distance < closestDistance)
-		{
-			closestDistance = distance;
-			closestZombie = zombie;
-		}
-	}
 	//flee from nearest zombie
 	constexpr float distanceAway{500.f};
 	const FVector fleeDirection{(Pawn->GetActorLocation()-closestZombie->GetActorLocation()).GetSafeNormal()};
