@@ -1,15 +1,15 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "StudentPerceptor.h"
+#include "StudentPerceptor_DelangheJorrit.h"
 
 
-UStudentPerceptor::UStudentPerceptor()
+UStudentPerceptor_DelangheJorrit::UStudentPerceptor_DelangheJorrit()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-void UStudentPerceptor::BeginPlay()
+void UStudentPerceptor_DelangheJorrit::BeginPlay()
 {
 	Super::BeginPlay();
 	
@@ -29,13 +29,13 @@ void UStudentPerceptor::BeginPlay()
 	//find AI perceptionComponent
 	if (auto PerceptionComp = ownerPawn->GetComponentByClass<UAIPerceptionComponent>())
 	{
-		PerceptionComp->OnTargetPerceptionUpdated.AddDynamic(this, &UStudentPerceptor::OnPerceptionUpdated);
+		PerceptionComp->OnTargetPerceptionUpdated.AddDynamic(this, &UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated);
 		UE_LOG(LogTemp, Warning, TEXT("StudentPerceptor: Successfully bound to perception!"));
 	}
 
 }
 
-void UStudentPerceptor::OnPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
+void UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
 	GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
 	FString::Printf(TEXT("Saw Something!")));

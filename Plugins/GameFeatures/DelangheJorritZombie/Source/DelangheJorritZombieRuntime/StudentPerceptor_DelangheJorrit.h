@@ -11,22 +11,23 @@
 #include "Items/BaseItem.h"
 #include "Zombies/BaseZombie.h"
 #include "Village/House/House.h"
-#include "StudentPerceptor.generated.h"
+#include "StudentPerceptor_DelangheJorrit.generated.h"
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class DELANGHEJORRITZOMBIERUNTIME_API UStudentPerceptor : public UActorComponent
+class DELANGHEJORRITZOMBIERUNTIME_API UStudentPerceptor_DelangheJorrit : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this component's properties
-	UStudentPerceptor();
+	UStudentPerceptor_DelangheJorrit();
 	
 	virtual void BeginPlay() override;
 
 	UFUNCTION()
 	virtual void OnPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 	
+	const TArray<AHouse*>& GetPerceivedHouses() const {return PerceivedHouses;}
 private:
 	UPROPERTY()
 	TArray<ABaseZombie*> PerceivedZombies{};
