@@ -29,6 +29,7 @@ public:
 	
 	const TArray<AHouse*>& GetObservedHouses() const {return ObservedHouses;}
 	const TArray<ABaseZombie*>& GetObservedZombies() const {return  ObservedZombies;}
+	const TArray<ABaseItem*>& GetObservedItems() const {return  ObservedItems;}
 private:
 	UPROPERTY()
 	TArray<ABaseZombie*> ObservedZombies{};
