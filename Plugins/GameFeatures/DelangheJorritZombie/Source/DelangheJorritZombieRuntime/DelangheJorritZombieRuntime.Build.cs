@@ -38,7 +38,8 @@ public class DelangheJorritZombieRuntime : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				"AIModule"
+				"AIModule",
+				"NavigationSystem"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
