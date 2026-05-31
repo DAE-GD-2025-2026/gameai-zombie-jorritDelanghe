@@ -16,20 +16,36 @@ EBTNodeResult::Type UBTTask_SetFleeTarget_DelangheJorrit::ExecuteTask(UBehaviorT
 	APawn* Pawn = OwnerComp.GetAIOwner()->GetPawn();
 	if (!Pawn) return EBTNodeResult::Failed;
 	
-	auto* perceptor{Pawn->GetComponentByClass<UStudentPerceptor_DelangheJorrit>()};
-	if (!perceptor) return EBTNodeResult::Failed;
+	auto* Perceptor{Pawn->GetComponentByClass<UStudentPerceptor_DelangheJorrit>()};
+	if (!Perceptor) return EBTNodeResult::Failed;
 	
-	const auto& zombies{perceptor->GetObservedZombies()};
-	if (zombies.IsEmpty()) return EBTNodeResult::Failed;
+	const auto& Zombies{Perceptor->GetObservedZombies()};
+	const auto& PurgeZones{Perceptor->GetObservedPurgeZones()};
+	if (Zombies.IsEmpty() && PurgeZones.IsEmpty()) return EBTNodeResult::Failed;
 	
-	//find nearest zombie
-	ABaseZombie* closestZombie{FindClosestActor(zombies, Pawn->GetActorLocation())};
+	//find nearest threat
+	ABaseZombie* ClosestZombie{FindClosestActor(Zombies, Pawn->GetActorLocation())};
+	APurgeZone* ClosestPurgeZone{FindClosestActor(PurgeZones, Pawn->GetActorLocation())};
 	
-	//flee from nearest zombie
-	constexpr float distanceAway{500.f};
-	const FVector fleeDirection{(Pawn->GetActorLocation()-closestZombie->GetActorLocation()).GetSafeNormal()};
-	const FVector fleeLocation{Pawn->GetActorLocation() + fleeDirection* distanceAway};
+	//compare distance threats
+	const FVector ActorLocation{Pawn->GetActorLocation()};
+	AActor* ClosestThreat{nullptr};
+	if (ClosestZombie&& ClosestPurgeZone)
+	{
+		const float ZombieDist{static_cast<float>(FVector::Dist(ClosestZombie->GetActorLocation(),ActorLocation))};
+		const float PurgeZonesDist{static_cast<float>(FVector::Dist(ClosestPurgeZone->GetActorLocation(),ActorLocation))};
+		ClosestThreat = ZombieDist<=PurgeZonesDist ? Cast<AActor>(ClosestZombie) : Cast<AActor>(ClosestPurgeZone); //no object slicing because pointer
+	}
+	else
+	{
+		ClosestThreat = ClosestZombie? Cast<AActor>(ClosestZombie) : Cast<AActor>(ClosestPurgeZone);
+	}
 	
-	OwnerComp.GetBlackboardComponent()->SetValueAsVector(TargetFleeLocation.SelectedKeyName,fleeLocation);
+	//flee from nearest threat
+	constexpr float DistanceAway{500.f};
+	const FVector FleeDirection{(ActorLocation-ClosestThreat->GetActorLocation()).GetSafeNormal()};
+	const FVector FleeLocation{ActorLocation + FleeDirection* DistanceAway};
+	
+	OwnerComp.GetBlackboardComponent()->SetValueAsVector(TargetFleeLocation.SelectedKeyName,FleeLocation);
 	return EBTNodeResult::Succeeded;
 }

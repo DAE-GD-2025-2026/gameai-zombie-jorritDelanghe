@@ -14,20 +14,20 @@ void UStudentPerceptor_DelangheJorrit::BeginPlay()
 	Super::BeginPlay();
 	
 	//get pawn
-	auto ownerPawn = Cast<APawn>(GetOwner());
-	if (!ownerPawn)
+	auto OwnerPawn = Cast<APawn>(GetOwner());
+	if (!OwnerPawn)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Can't find ownerPawn"));
 		return;
 	}
 	//ai controller of pawn
-	auto AiController = ownerPawn->GetController();
+	auto AiController = OwnerPawn->GetController();
 	if (!AiController)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Can't find AiController"));
 	}
 	//find AI perceptionComponent
-	if (auto PerceptionComp = ownerPawn->GetComponentByClass<UAIPerceptionComponent>())
+	if (auto PerceptionComp = OwnerPawn->GetComponentByClass<UAIPerceptionComponent>())
 	{
 		PerceptionComp->OnTargetPerceptionUpdated.AddDynamic(this, &UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated);
 		UE_LOG(LogTemp, Warning, TEXT("StudentPerceptor: Successfully bound to perception!"));
@@ -41,54 +41,70 @@ void UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated(AActor* Actor, FAISti
 	FString::Printf(TEXT("Saw Something!")));
 	if (!Actor) return;
 	
-	bool const sensed = Stimulus.WasSuccessfullySensed();
-	UE_LOG(LogTemp, Warning, TEXT("Perceived %s| sensed %s"), *Actor->GetName(), sensed ? TEXT("Yes"):TEXT("NO"));
+	bool const bSensed = Stimulus.WasSuccessfullySensed();
+	UE_LOG(LogTemp, Warning, TEXT("Perceived %s| sensed %s"), *Actor->GetName(), bSensed ? TEXT("Yes"):TEXT("NO"));
 	
-	if (ABaseZombie* zombie = Cast<ABaseZombie>(Actor))
+	if (ABaseZombie* Zombie = Cast<ABaseZombie>(Actor))
 	{
-		if (sensed)
+		if (bSensed)
 		{
-			ObservedZombies.Add(zombie);
+			ObservedZombies.Add(Zombie);
 			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
 	FString::Printf(TEXT("Saw Zombie!")));
 		}
 		else
 		{
-			ObservedZombies.Remove(zombie);
+			ObservedZombies.Remove(Zombie);
 			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
 	FString::Printf(TEXT("Zombie not in view anymore!")));
 		}
 	}
 	
-	if (ABaseItem* item = Cast<ABaseItem>(Actor))
+	if (ABaseItem* Item = Cast<ABaseItem>(Actor))
 	{
-		if (sensed)
+		if (bSensed)
 		{
-			ObservedItems.Add(item);
+			ObservedItems.Add(Item);
 			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
 	FString::Printf(TEXT("Saw item!")));
 		}
 		else
 		{
-			ObservedItems.Remove(item);
+			ObservedItems.Remove(Item);
 			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
 	FString::Printf(TEXT("item not in view anymore!")));
 		}
 	}
 	
-	if (auto house = Cast<AHouse>(Actor))
+	if (auto House = Cast<AHouse>(Actor))
 	{
-		if (sensed)
+		if (bSensed)
 		{
-			ObservedHouses.Add(house);
+			ObservedHouses.Add(House);
 			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
 	FString::Printf(TEXT("Saw house!")));
 		}
 		else
 		{
-			ObservedHouses.Remove(house);
+			ObservedHouses.Remove(House);
 			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
 	FString::Printf(TEXT("house not in view anymore!")));
+		}
+	}
+	
+	if (auto PurgeZone = static_cast<APurgeZone*>(Actor))
+	{
+		if (bSensed)
+		{
+			ObservedPurgeZones.Add(PurgeZone);
+			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
+	FString::Printf(TEXT("Saw PurgeZone!")));
+		}
+		else
+		{
+			ObservedPurgeZones.Remove(PurgeZone);
+			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
+	FString::Printf(TEXT("PurgeZone not in view anymore!")));
 		}
 	}
 

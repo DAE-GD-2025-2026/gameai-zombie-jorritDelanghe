@@ -11,6 +11,7 @@
 #include "Items/BaseItem.h"
 #include "Zombies/BaseZombie.h"
 #include "Village/House/House.h"
+#include "PurgeZones/PurgeZone.h"
 #include "StudentPerceptor_DelangheJorrit.generated.h"
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -30,6 +31,7 @@ public:
 	const TArray<AHouse*>& GetObservedHouses() const {return ObservedHouses;}
 	const TArray<ABaseZombie*>& GetObservedZombies() const {return  ObservedZombies;}
 	const TArray<ABaseItem*>& GetObservedItems() const {return  ObservedItems;}
+	const TArray<APurgeZone*>& GetObservedPurgeZones() const {return  ObservedPurgeZones;}
 private:
 	UPROPERTY()
 	TArray<ABaseZombie*> ObservedZombies{};
@@ -39,4 +41,7 @@ private:
 	
 	UPROPERTY()
 	TArray<AHouse*> ObservedHouses{};
+	
+	UPROPERTY()
+	TArray<APurgeZone*> ObservedPurgeZones{};
 };
