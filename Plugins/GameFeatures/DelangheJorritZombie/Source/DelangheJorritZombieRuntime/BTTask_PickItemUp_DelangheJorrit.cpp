@@ -1,9 +1,12 @@
 ﻿#include "BTTask_PickItemUp_DelangheJorrit.h"
 
 #include "AIController.h"
+#include "StudentPerceptor_DelangheJorrit.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Common/InventoryComponent.h"
 #include "Items/BaseItem.h"
+
+class UStudentPerceptor_DelangheJorrit;
 
 UBTTask_PickItemUp_DelangheJorrit::UBTTask_PickItemUp_DelangheJorrit()
 {
@@ -28,6 +31,11 @@ EBTNodeResult::Type UBTTask_PickItemUp_DelangheJorrit::ExecuteTask(UBehaviorTree
 	{
 		if (Inventory->GrabItem(i,Item))
 		{
+			// Tell the perceptor this item is gone
+			if (auto* Perceptor{Pawn->GetComponentByClass<UStudentPerceptor_DelangheJorrit>()})
+			{
+				Perceptor->RemoveObservedItem(Item);
+			}
 			return EBTNodeResult::Succeeded;
 		}
 	}

@@ -68,12 +68,6 @@ void UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated(AActor* Actor, FAISti
 			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
 	FString::Printf(TEXT("Saw item!")));
 		}
-		else
-		{
-			ObservedItems.Remove(Item);
-			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
-	FString::Printf(TEXT("item not in view anymore!")));
-		}
 	}
 	
 	if (auto House = Cast<AHouse>(Actor))
@@ -108,4 +102,9 @@ void UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated(AActor* Actor, FAISti
 		}
 	}
 
+}
+
+void UStudentPerceptor_DelangheJorrit::RemoveObservedItem(ABaseItem* item)
+{
+	ObservedItems.Remove(item);
 }

@@ -32,6 +32,8 @@ public:
 	const TArray<ABaseZombie*>& GetObservedZombies() const {return  ObservedZombies;}
 	const TArray<ABaseItem*>& GetObservedItems() const {return  ObservedItems;}
 	const TArray<APurgeZone*>& GetObservedPurgeZones() const {return  ObservedPurgeZones;}
+	
+	void RemoveObservedItem(ABaseItem* item);
 private:
 	UPROPERTY()
 	TArray<ABaseZombie*> ObservedZombies{};
