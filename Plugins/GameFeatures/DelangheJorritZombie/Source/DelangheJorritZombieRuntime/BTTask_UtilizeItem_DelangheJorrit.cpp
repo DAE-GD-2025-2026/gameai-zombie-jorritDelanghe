@@ -28,7 +28,7 @@ EBTNodeResult::Type UBTTask_UtilizeItem_DelangheJorrit::ExecuteTask(UBehaviorTre
 	for (int i{};i<Inventory->GetInventoryCapacity();++i)
 	{
 		const ABaseItem* item {Inventory->GetInventory()[i]};
-		if (!item) return EBTNodeResult::Failed;
+		if (!item) continue;
 		
 		if (item->GetItemType() == EItemType::Medkit && HealthComp->GetHealth()<MinHealthForHeal)
 		{
@@ -41,5 +41,5 @@ EBTNodeResult::Type UBTTask_UtilizeItem_DelangheJorrit::ExecuteTask(UBehaviorTre
 			return EBTNodeResult::Succeeded;
 		}
 	}
-	return Super::ExecuteTask(OwnerComp, NodeMemory);
+	return EBTNodeResult::Failed;
 }
