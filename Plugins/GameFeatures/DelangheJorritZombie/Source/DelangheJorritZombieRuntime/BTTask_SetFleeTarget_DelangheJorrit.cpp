@@ -42,7 +42,7 @@ EBTNodeResult::Type UBTTask_SetFleeTarget_DelangheJorrit::ExecuteTask(UBehaviorT
 	}
 	
 	//flee from nearest threat
-	constexpr float DistanceAway{150.f};
+	constexpr float DistanceAway{500.f};
 	const FVector FleeDirection{(ActorLocation-ClosestThreat->GetActorLocation()).GetSafeNormal()};
 	const FVector FleeLocation{ActorLocation + FleeDirection* DistanceAway};
 	
