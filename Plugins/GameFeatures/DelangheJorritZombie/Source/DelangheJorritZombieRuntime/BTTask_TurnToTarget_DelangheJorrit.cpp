@@ -1,13 +1,13 @@
-﻿#include "BTTaskTurnToTarget_DelangheJorrit.h"
+﻿#include "BTTask_TurnToTarget_DelangheJorrit.h"
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
-UBTTaskTurnToTarget_DelangheJorrit::UBTTaskTurnToTarget_DelangheJorrit()
+UBTTask_TurnToTarget_DelangheJorrit::UBTTask_TurnToTarget_DelangheJorrit()
 {
 	NodeName = "Turn to Target";
 }
 
-EBTNodeResult::Type UBTTaskTurnToTarget_DelangheJorrit::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
+EBTNodeResult::Type UBTTask_TurnToTarget_DelangheJorrit::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 	uint8* NodeMemory)
 {
 	APawn* Pawn = OwnerComp.GetAIOwner()->GetPawn();

@@ -1,15 +1,15 @@
-﻿#include "BTTaskShoot_DelangheJorrit.h"
+﻿#include "BTTask_Shoot_DelangheJorrit.h"
 #include "AIController.h"
 
 #include "Common/InventoryComponent.h"
 #include "StudentPerceptor_DelangheJorrit.h"
 
-UBTTaskShoot_DelangheJorrit::UBTTaskShoot_DelangheJorrit()
+UBTTask_Shoot_DelangheJorrit::UBTTask_Shoot_DelangheJorrit()
 {
 	NodeName = "Shoot gun or shotgun";
 }
 
-EBTNodeResult::Type UBTTaskShoot_DelangheJorrit::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
+EBTNodeResult::Type UBTTask_Shoot_DelangheJorrit::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
                                                              uint8* NodeMemory)
 {
 	APawn* Pawn {OwnerComp.GetAIOwner()->GetPawn()};
