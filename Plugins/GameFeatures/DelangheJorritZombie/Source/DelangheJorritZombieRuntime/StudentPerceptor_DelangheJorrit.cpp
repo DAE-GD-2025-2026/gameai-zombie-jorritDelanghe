@@ -92,7 +92,7 @@ void UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated(AActor* Actor, FAISti
 		}
 	}
 	
-	if (auto PurgeZone = static_cast<APurgeZone*>(Actor))
+	if (auto PurgeZone = Cast<APurgeZone>(Actor))
 	{
 		if (bSensed)
 		{
