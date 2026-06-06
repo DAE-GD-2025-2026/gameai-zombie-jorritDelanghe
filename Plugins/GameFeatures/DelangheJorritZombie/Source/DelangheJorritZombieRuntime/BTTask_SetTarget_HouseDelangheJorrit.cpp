@@ -22,6 +22,16 @@ EBTNodeResult::Type UBTTask_SetTarget_HouseDelangheJorrit::ExecuteTask(UBehavior
 	if (Houses.IsEmpty()) return EBTNodeResult::Failed;
 	
 	//avoid visited houses
+	if (AHouse* CurrentHouse = Cast<AHouse>(
+	OwnerComp.GetBlackboardComponent()->GetValueAsObject(FName("TargetHouse"))))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Marking house visited: %s"), *CurrentHouse->GetName());
+		Perceptor->MarkHouseVisited(CurrentHouse);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("MarkHouseVisited: no house found on blackboard!"));
+	}
 	TArray<AHouse*> CandidateHouses{};
 	if (!bCanGoInVisistedHouses)
 	{
