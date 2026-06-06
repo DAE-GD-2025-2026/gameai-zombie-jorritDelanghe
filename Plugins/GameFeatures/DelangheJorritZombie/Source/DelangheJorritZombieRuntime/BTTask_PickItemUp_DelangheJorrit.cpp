@@ -31,6 +31,10 @@ EBTNodeResult::Type UBTTask_PickItemUp_DelangheJorrit::ExecuteTask(UBehaviorTree
 	{
 		if (Inventory->GrabItem(i,Item))
 		{
+
+			GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
+			UEnum::GetValueAsString(Item->GetItemType()));
+			
 			// Tell the perceptor this item is gone
 			if (auto* Perceptor{Pawn->GetComponentByClass<UStudentPerceptor_DelangheJorrit>()})
 			{

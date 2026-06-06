@@ -12,7 +12,7 @@ UBTTask_SetFleeTarget_DelangheJorrit::UBTTask_SetFleeTarget_DelangheJorrit()
 
 EBTNodeResult::Type UBTTask_SetFleeTarget_DelangheJorrit::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 	uint8* NodeMemory)
-{
+{	
 	APawn* Pawn = OwnerComp.GetAIOwner()->GetPawn();
 	if (!Pawn) return EBTNodeResult::Failed;
 	

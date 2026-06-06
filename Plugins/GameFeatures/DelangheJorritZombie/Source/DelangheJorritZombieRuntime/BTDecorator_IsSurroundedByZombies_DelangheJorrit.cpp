@@ -16,5 +16,13 @@ bool UBTDecorator_IsSurroundedByZombies_DelangheJorrit::CalculateRawConditionVal
 	auto* Perceptor{Pawn->GetComponentByClass<UStudentPerceptor_DelangheJorrit>()};
 	if (!Perceptor) return false;
 	
-	return Perceptor->GetObservedZombies().Num()>= MaxZombies;
+	//remove zombies if too far
+	constexpr float ForgetDistance{2500.f};
+	FVector MyLocation{Pawn->GetActorLocation()};
+	Perceptor->GetObservedZombies().RemoveAll([&](ABaseZombie* Z)
+	{
+		return !Z || FVector::Dist(Z->GetActorLocation(), MyLocation) > ForgetDistance;
+	});
+	
+	return Perceptor->GetObservedZombies().Num()<= MaxZombies;
 }
