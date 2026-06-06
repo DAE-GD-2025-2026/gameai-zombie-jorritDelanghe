@@ -18,11 +18,36 @@ EBTNodeResult::Type UBTTask_SetTarget_HouseDelangheJorrit::ExecuteTask(UBehavior
 	auto* Perceptor = Pawn->GetComponentByClass<UStudentPerceptor_DelangheJorrit>();
 	if (!Perceptor) return EBTNodeResult::Failed;
 	
-	const auto& houses{Perceptor->GetObservedHouses()};
-	if (houses.IsEmpty()) return EBTNodeResult::Failed;
+	const auto& Houses{Perceptor->GetObservedHouses()};
+	if (Houses.IsEmpty()) return EBTNodeResult::Failed;
+	
+	//avoid visited houses
+	TArray<AHouse*> CandidateHouses{};
+	if (!bCanGoInVisistedHouses)
+	{
+		const auto& VisitedHouses{Perceptor->GetVisitedHouses()};
+		for (const auto& House : Houses)
+		{
+			if (!VisitedHouses.Contains(House))
+			{
+				CandidateHouses.Add(House);
+			}
+		}
+		
+		//if all houses visited, reset
+		if (CandidateHouses.IsEmpty())
+		{
+			Perceptor->ClearVisitedHouses();
+			return EBTNodeResult::Failed;
+		}
+	}
+	else
+	{
+		CandidateHouses = Houses;
+	}
 	
 	//look for nearest house
-	AHouse* closestHouse{FindClosestActor(houses,Pawn->GetActorLocation())};
+	AHouse* closestHouse{FindClosestActor(CandidateHouses,Pawn->GetActorLocation())};
 	
 	OwnerComp.GetBlackboardComponent()->SetValueAsObject(TargetHouseKey.SelectedKeyName,closestHouse);
 	return EBTNodeResult::Succeeded;

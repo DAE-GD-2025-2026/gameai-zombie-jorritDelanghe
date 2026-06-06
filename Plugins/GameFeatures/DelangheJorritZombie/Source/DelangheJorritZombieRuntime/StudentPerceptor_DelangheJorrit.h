@@ -28,7 +28,12 @@ public:
 	UFUNCTION()
 	virtual void OnPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 	
+	//house
+	void MarkHouseVisited(AHouse* House) { VisitedHouses.Add(House); }
+	void ClearVisitedHouses() {VisitedHouses.Empty();}
 	const TArray<AHouse*>& GetObservedHouses() const {return ObservedHouses;}
+	const TArray<AHouse*>& GetVisitedHouses() const {return VisitedHouses;}
+	
 	const TArray<ABaseZombie*>& GetObservedZombies() const {return  ObservedZombies;}
 	const TArray<ABaseItem*>& GetObservedItems() const {return  ObservedItems;}
 	const TArray<APurgeZone*>& GetObservedPurgeZones() const {return  ObservedPurgeZones;}
@@ -43,6 +48,9 @@ private:
 	
 	UPROPERTY()
 	TArray<AHouse*> ObservedHouses{};
+	
+	UPROPERTY()
+	TArray<AHouse*> VisitedHouses{};
 	
 	UPROPERTY()
 	TArray<APurgeZone*> ObservedPurgeZones{};

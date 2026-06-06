@@ -16,5 +16,5 @@ bool UBTDecorator_IsLowHealth_DelangheJorrit::CalculateRawConditionValue(UBehavi
 	auto* Health{Pawn->GetComponentByClass<UHealthComponent>()};
 	if (!Health) return false;
 	
-	return Health->GetHealth()>= MinHealth;
+	return Health->GetHealth()<= MinHealth;
 }
