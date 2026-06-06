@@ -43,5 +43,7 @@ EBTNodeResult::Type UBTTask_PickItemUp_DelangheJorrit::ExecuteTask(UBehaviorTree
 			return EBTNodeResult::Succeeded;
 		}
 	}
+	//prevent stuck loop
+	OwnerComp.GetBlackboardComponent()->ClearValue(TargetItemKey.SelectedKeyName);
 	return EBTNodeResult::Failed;
 }
