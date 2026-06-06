@@ -36,6 +36,10 @@ EBTNodeResult::Type UBTTask_Shoot_DelangheJorrit::ExecuteTask(UBehaviorTreeCompo
 			if (Item->GetValue() > 0)
 			{
 				Inventory->UseItem(index);
+				if (Item->GetValue()<=0)
+				{
+					Inventory->RemoveItem(index);
+				}
 				return EBTNodeResult::Succeeded;
 			}
 		}

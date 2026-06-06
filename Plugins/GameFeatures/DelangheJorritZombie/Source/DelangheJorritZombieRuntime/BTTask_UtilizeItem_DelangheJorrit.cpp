@@ -33,11 +33,13 @@ EBTNodeResult::Type UBTTask_UtilizeItem_DelangheJorrit::ExecuteTask(UBehaviorTre
 		if (item->GetItemType() == EItemType::Medkit && HealthComp->GetHealth()<MinHealthForHeal)
 		{
 			Inventory->UseItem(i);
+			Inventory->RemoveItem(i);
 			return EBTNodeResult::Succeeded;
 		}
 		if (item->GetItemType() == EItemType::Food && StaminaComp->GetCurrentStamina()<MinStaminaForBoost)
 		{
 			Inventory->UseItem(i);
+			Inventory->RemoveItem(i);
 			return EBTNodeResult::Succeeded;
 		}
 	}
