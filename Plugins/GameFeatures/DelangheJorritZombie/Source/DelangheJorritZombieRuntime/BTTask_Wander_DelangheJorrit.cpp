@@ -15,6 +15,17 @@ EBTNodeResult::Type UBTTask_Wander_DelangheJorrit::ExecuteTask(UBehaviorTreeComp
 	UNavigationSystemV1* NavSystem = UNavigationSystemV1::GetCurrent(GetWorld());
 	if (!Pawn|| !NavSystem) return EBTNodeResult::Failed;
 	
+	// If we already have a valid target, don't pick a new one
+	UBlackboardComponent* BB = OwnerComp.GetBlackboardComponent();
+	FVector ExistingTarget = BB->GetValueAsVector(TargetLocationKey.SelectedKeyName);
+	float DistToTarget = FVector::Dist(Pawn->GetActorLocation(), ExistingTarget);
+    
+	constexpr float MinDistanceToKeepTarget = 200.f;
+	if (ExistingTarget != FVector::ZeroVector && DistToTarget > MinDistanceToKeepTarget)
+	{
+		return EBTNodeResult::Succeeded; // keep moving to existing target
+	}
+	
 	//forward direction
 	const FVector2D ForwardVector{Pawn->GetActorForwardVector().X, Pawn->GetActorForwardVector().Y};
 	

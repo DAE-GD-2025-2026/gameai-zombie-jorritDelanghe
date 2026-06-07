@@ -40,10 +40,15 @@ EBTNodeResult::Type UBTTask_PickItemUp_DelangheJorrit::ExecuteTask(UBehaviorTree
 			{
 				Perceptor->RemoveObservedItem(Item);
 			}
+			OwnerComp.GetBlackboardComponent()->ClearValue(TargetItemKey.SelectedKeyName);
 			return EBTNodeResult::Succeeded;
 		}
 	}
 	//prevent stuck loop
+	if (auto* Perceptor{Pawn->GetComponentByClass<UStudentPerceptor_DelangheJorrit>()})
+	{
+		Perceptor->RemoveObservedItem(Item); // ADD THIS
+	}
 	OwnerComp.GetBlackboardComponent()->ClearValue(TargetItemKey.SelectedKeyName);
 	return EBTNodeResult::Failed;
 }

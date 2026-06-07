@@ -22,5 +22,6 @@ EBTNodeResult::Type UBTTask_MarkHouseVisited_DelangheJorrit::ExecuteTask(UBehavi
 	{
 		Perceptor->MarkHouseVisited(CurrentHouse);
 	}
+	OwnerComp.GetBlackboardComponent()->ClearValue(FName("TargetHouse"));
 	return EBTNodeResult::Succeeded;
 }

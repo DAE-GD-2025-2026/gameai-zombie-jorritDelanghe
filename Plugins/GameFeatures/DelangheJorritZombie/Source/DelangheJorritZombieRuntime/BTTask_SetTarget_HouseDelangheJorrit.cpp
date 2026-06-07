@@ -21,6 +21,9 @@ EBTNodeResult::Type UBTTask_SetTarget_HouseDelangheJorrit::ExecuteTask(UBehavior
 	const auto& Houses{Perceptor->GetObservedHouses()};
 	if (Houses.IsEmpty()) return EBTNodeResult::Failed;
 	
+	if (OwnerComp.GetBlackboardComponent()->GetValueAsObject(TargetHouseKey.SelectedKeyName))
+		return EBTNodeResult::Succeeded;
+	
 	//avoid visited houses
 	TArray<AHouse*> CandidateHouses{};
 	if (!bCanGoInVisistedHouses)
