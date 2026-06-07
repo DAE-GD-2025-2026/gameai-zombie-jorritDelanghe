@@ -38,7 +38,7 @@ void UStudentPerceptor_DelangheJorrit::BeginPlay()
 void UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
 	if (!Actor) return;
-	CleanupZombies(); // so no endless list
+	
 	bool const bSensed = Stimulus.WasSuccessfullySensed();
 	UE_LOG(LogTemp, Warning, TEXT("Perceived %s| sensed %s"), *Actor->GetName(), bSensed ? TEXT("Yes"):TEXT("NO"));
 	
@@ -49,7 +49,7 @@ void UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated(AActor* Actor, FAISti
 			ObservedZombies.AddUnique(Zombie);;
 		}
 	}
-
+	
 	if (ABaseItem* Item = Cast<ABaseItem>(Actor))
 	{
 		if (bSensed)
@@ -97,18 +97,4 @@ void UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated(AActor* Actor, FAISti
 void UStudentPerceptor_DelangheJorrit::RemoveObservedItem(ABaseItem* item)
 {
 	ObservedItems.Remove(item);
-}
-
-void UStudentPerceptor_DelangheJorrit::CleanupZombies()
-{
-	APawn* OwnerPawn = Cast<APawn>(GetOwner());
-	if (!OwnerPawn) return;
-
-	const FVector MyLocation = OwnerPawn->GetActorLocation();
-	constexpr float ForgetDistance = 2500.f;
-
-	ObservedZombies.RemoveAll([&](ABaseZombie* Z)
-	{
-		return !IsValid(Z) || FVector::Dist(Z->GetActorLocation(), MyLocation) > ForgetDistance;
-	});
 }

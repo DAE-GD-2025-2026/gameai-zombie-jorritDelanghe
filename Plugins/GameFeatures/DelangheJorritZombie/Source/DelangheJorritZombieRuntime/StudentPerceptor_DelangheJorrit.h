@@ -54,6 +54,4 @@ private:
 	
 	UPROPERTY()
 	TArray<APurgeZone*> ObservedPurgeZones{};
-	
-	void CleanupZombies();
 };

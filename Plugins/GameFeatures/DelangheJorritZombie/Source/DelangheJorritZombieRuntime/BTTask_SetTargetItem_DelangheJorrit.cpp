@@ -25,13 +25,9 @@ EBTNodeResult::Type UBTTask_SetTargetItem_DelangheJorrit::ExecuteTask(UBehaviorT
 	TArray <ABaseItem*> UsefulItems;
 	for (auto Item : Items)
 	{
-		if (IsValid(Item) && Item->GetItemType() != EItemType::Garbage)
+		if (Item->GetItemType() != EItemType::Garbage)
 		{
 			UsefulItems.Add(Item);
-		}
-		else if (!IsValid(Item))
-		{
-			Perceptor->RemoveObservedItem(Item);
 		}
 	}
 	if (UsefulItems.IsEmpty()) return EBTNodeResult::Failed;
