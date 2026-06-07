@@ -11,18 +11,24 @@ UBTTask_Wander_DelangheJorrit::UBTTask_Wander_DelangheJorrit()
 
 EBTNodeResult::Type UBTTask_Wander_DelangheJorrit::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	constexpr float radius{500.f};
-	APawn* pawn = OwnerComp.GetAIOwner()->GetPawn();
-	if (!pawn) return EBTNodeResult::Failed;
+	constexpr float Radius{600.f};
+	constexpr float ForwardDist{200.f};
 	
-	FNavLocation location;
+	APawn* Pawn = OwnerComp.GetAIOwner()->GetPawn();
+	if (!Pawn) return EBTNodeResult::Failed;
+	
+	// bias origin forward before picking random point
+	const FVector Forward = Pawn->GetActorForwardVector();
+	const FVector BiasedOrigin = Pawn->GetActorLocation() + Forward * ForwardDist;
+	
+	FNavLocation Location;
 	UNavigationSystemV1::GetCurrent(GetWorld())->GetRandomReachablePointInRadius(
-		pawn->GetActorLocation()
-		,radius
-		,location);
+	BiasedOrigin
+		,Radius
+		,Location);
 	
-	const FVector randomLocation{location};
+	const FVector RandomLocation{Location};
 	
-	OwnerComp.GetBlackboardComponent()->SetValueAsVector(TargetLocationKey.SelectedKeyName, randomLocation);
+	OwnerComp.GetBlackboardComponent()->SetValueAsVector(TargetLocationKey.SelectedKeyName, RandomLocation);
 	return EBTNodeResult::Succeeded;
 }
