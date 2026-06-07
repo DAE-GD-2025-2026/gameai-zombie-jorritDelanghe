@@ -35,6 +35,8 @@ EBTNodeResult::Type UBTTask_Shoot_DelangheJorrit::ExecuteTask(UBehaviorTreeCompo
 		{
 			if (Item->GetValue() > 0)
 			{
+				GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
+		  FString::Printf(TEXT("Shoot")));
 				Inventory->UseItem(index);
 				if (Item->GetValue()<=0)
 				{
