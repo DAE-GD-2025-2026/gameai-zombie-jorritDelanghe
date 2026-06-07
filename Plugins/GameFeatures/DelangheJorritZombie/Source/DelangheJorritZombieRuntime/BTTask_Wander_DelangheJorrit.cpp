@@ -11,36 +11,18 @@ UBTTask_Wander_DelangheJorrit::UBTTask_Wander_DelangheJorrit()
 
 EBTNodeResult::Type UBTTask_Wander_DelangheJorrit::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	APawn* Pawn = OwnerComp.GetAIOwner()->GetPawn();
-	UNavigationSystemV1* NavSystem = UNavigationSystemV1::GetCurrent(GetWorld());
-	if (!Pawn|| !NavSystem) return EBTNodeResult::Failed;
+	constexpr float radius{500.f};
+	APawn* pawn = OwnerComp.GetAIOwner()->GetPawn();
+	if (!pawn) return EBTNodeResult::Failed;
 	
-	//forward direction
-	const FVector2D ForwardVector{Pawn->GetActorForwardVector().X, Pawn->GetActorForwardVector().Y};
+	FNavLocation location;
+	UNavigationSystemV1::GetCurrent(GetWorld())->GetRandomReachablePointInRadius(
+		pawn->GetActorLocation()
+		,radius
+		,location);
 	
-	// Circle center
-	const FVector2D PawnPosition{Pawn->GetActorLocation().X, Pawn->GetActorLocation().Y};
-	const FVector2D CirclePos{ PawnPosition + ForwardVector*OffsetDistance};
+	const FVector randomLocation{location};
 	
-
-	m_WanderAngle = FMath::Fmod(m_WanderAngle + FMath::RandRange(-1.f, 1.f) * MaxAngleChange, 2.f * PI);
-
-	//target on circle
-	const FVector2D TargetOnCircle{
-		CirclePos.X + WanderRadius * FMath::Cos(m_WanderAngle)
-		,CirclePos.Y + WanderRadius * FMath::Sin(m_WanderAngle)};
-	
-	//snap to navemesh, otherwise problems with wandering forever
-	const FVector WanderTarget{ TargetOnCircle.X, TargetOnCircle.Y, Pawn->GetActorLocation().Z };
-	const FVector SnapExtent{ 200.f, 200.f, 200.f };
-	
-	FNavLocation NavLocation;
-	if (!NavSystem->ProjectPointToNavigation(WanderTarget, NavLocation, SnapExtent))
-	{
-		//no failed because otherwise infinite loop needs always to succeed
-		NavSystem->GetRandomReachablePointInRadius(Pawn->GetActorLocation(), WanderRadius, NavLocation);
-	}
-	
-	OwnerComp.GetBlackboardComponent()->SetValueAsVector(TargetLocationKey.SelectedKeyName, NavLocation);
+	OwnerComp.GetBlackboardComponent()->SetValueAsVector(TargetLocationKey.SelectedKeyName, randomLocation);
 	return EBTNodeResult::Succeeded;
 }

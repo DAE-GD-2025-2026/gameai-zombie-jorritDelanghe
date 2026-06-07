@@ -14,18 +14,4 @@ public:
 private:
 	UPROPERTY(EditAnywhere,Category="Blackboard")
 	FBlackboardKeySelector TargetLocationKey;
-	
-	// How far ahead the wander circle is projected
-	UPROPERTY(EditAnywhere, Category="Wander", meta=(ClampMin="50.0", ClampMax="1000.0"))
-	float OffsetDistance{ 50.f };
- 
-	// Radius of the wander circle,larger = more weird turns
-	UPROPERTY(EditAnywhere, Category="Wander", meta=(ClampMin="50.0", ClampMax="500.0"))
-	float WanderRadius{ 50.f };
- 
-	// Max angle change
-	UPROPERTY(EditAnywhere, Category="Wander", meta=(ClampMin="0.1", ClampMax="3.14"))
-	float MaxAngleChange{ 0.5f };
-	
-	float m_WanderAngle{ 0.f };
 };
