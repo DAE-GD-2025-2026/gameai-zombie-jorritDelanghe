@@ -3,7 +3,7 @@
 #include "BTDecorator_IsLowHealth_DelangheJorrit.generated.h"
 
 UCLASS()
-class UBTDecorator_IsLowHealth_DelangheJorrit final : public UBTDecorator
+class DELANGHEJORRITZOMBIERUNTIME_API UBTDecorator_IsLowHealth_DelangheJorrit final : public UBTDecorator
 {
 	GENERATED_BODY()
 public:

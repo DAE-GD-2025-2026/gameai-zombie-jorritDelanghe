@@ -55,8 +55,6 @@ void UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated(AActor* Actor, FAISti
 		if (bSensed)
 		{
 			ObservedItems.Add(Item);
-	//// 		GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
-	// FString::Printf(TEXT("Saw item!")));
 		}
 	}
 	
@@ -65,14 +63,10 @@ void UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated(AActor* Actor, FAISti
 		if (bSensed)
 		{
 			ObservedHouses.Add(House);
-	// 		GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
-	// FString::Printf(TEXT("Saw house!")));
 		}
 		else
 		{
 			ObservedHouses.Remove(House);
-	// 		GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
-	// FString::Printf(TEXT("house not in view anymore!")));
 		}
 	}
 	
@@ -81,14 +75,10 @@ void UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated(AActor* Actor, FAISti
 		if (bSensed)
 		{
 			ObservedPurgeZones.Add(PurgeZone);
-	// 		GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
-	// FString::Printf(TEXT("Saw PurgeZone!")));
 		}
 		else
 		{
 			ObservedPurgeZones.Remove(PurgeZone);
-	// 		GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
-	// FString::Printf(TEXT("PurgeZone not in view anymore!")));
 		}
 	}
 

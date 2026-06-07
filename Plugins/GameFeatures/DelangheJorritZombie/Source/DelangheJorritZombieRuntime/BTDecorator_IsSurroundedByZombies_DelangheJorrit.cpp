@@ -24,5 +24,5 @@ bool UBTDecorator_IsSurroundedByZombies_DelangheJorrit::CalculateRawConditionVal
 		return !Z || FVector::Dist(Z->GetActorLocation(), MyLocation) > ForgetDistance;
 	});
 	
-	return Perceptor->GetObservedZombies().Num()<= MaxZombies;
+	return Perceptor->GetObservedZombies().Num()>= MaxZombies;
 }
