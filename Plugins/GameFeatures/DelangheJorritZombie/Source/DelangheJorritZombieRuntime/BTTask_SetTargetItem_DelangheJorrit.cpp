@@ -18,12 +18,11 @@ EBTNodeResult::Type UBTTask_SetTargetItem_DelangheJorrit::ExecuteTask(UBehaviorT
 	auto* Perceptor = Pawn->GetComponentByClass<UStudentPerceptor_DelangheJorrit>();
 	if (!Perceptor) return EBTNodeResult::Failed;
 	
-	OwnerComp.GetBlackboardComponent()->ClearValue(TargetItemKey.SelectedKeyName);
+	const auto& Items{Perceptor->GetObservedItems()};
+	if (Items.IsEmpty()) return EBTNodeResult::Failed;
 	
 	//filter trough only the useful items, no garbage
-	const auto& Items{Perceptor->GetObservedItems()};
 	TArray <ABaseItem*> UsefulItems;
-	
 	for (auto Item : Items)
 	{
 		if (IsValid(Item) && Item->GetItemType() != EItemType::Garbage)
@@ -39,8 +38,7 @@ EBTNodeResult::Type UBTTask_SetTargetItem_DelangheJorrit::ExecuteTask(UBehaviorT
 	
 	//look for nearest Item
 	ABaseItem* ClosestItem{FindClosestActor(UsefulItems,Pawn->GetActorLocation())};
-	if (!ClosestItem) return EBTNodeResult::Failed;
 	
-	OwnerComp.GetBlackboardComponent()->SetValueAsObject(TargetItemKey.SelectedKeyName, ClosestItem);
+	OwnerComp.GetBlackboardComponent()->SetValueAsObject(TargetItemKey.SelectedKeyName,ClosestItem);
 	return EBTNodeResult::Succeeded;
 }
