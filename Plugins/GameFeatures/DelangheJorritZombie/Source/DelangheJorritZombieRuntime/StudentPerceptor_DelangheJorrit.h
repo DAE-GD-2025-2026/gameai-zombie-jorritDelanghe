@@ -34,7 +34,7 @@ public:
 	const TArray<AHouse*>& GetObservedHouses() const {return ObservedHouses;}
 	const TArray<AHouse*>& GetVisitedHouses() const {return VisitedHouses;}
 	
-	 TArray<ABaseZombie*>& GetObservedZombies() {return  ObservedZombies;}
+	const TArray<ABaseZombie*>& GetObservedZombies() const {return  ObservedZombies;}
 	const TArray<ABaseItem*>& GetObservedItems() const {return  ObservedItems;}
 	const TArray<APurgeZone*>& GetObservedPurgeZones() const {return  ObservedPurgeZones;}
 	
