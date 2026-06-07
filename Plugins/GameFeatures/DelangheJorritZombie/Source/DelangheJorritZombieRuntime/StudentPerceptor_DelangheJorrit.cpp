@@ -55,7 +55,7 @@ void UStudentPerceptor_DelangheJorrit::OnPerceptionUpdated(AActor* Actor, FAISti
 		if (bSensed)
 		{
 			ObservedItems.Add(Item);
-	// 		GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
+	//// 		GEngine->AddOnScreenDebugMessage(5, 1.f, FColor::Green, 
 	// FString::Printf(TEXT("Saw item!")));
 		}
 	}
